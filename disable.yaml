@@ -1,0 +1,19 @@
+---
+- name: Ansible playbook to perform a PUT request for disabling a feature flag
+  hosts: localhost
+  tasks:
+    - name: Disable the db_not_responding feature flag
+      uri:
+        url: "http://easytrade-frontend-easytrade.apps.cluster-dl5rs.dynamic.redhatworkshops.io/feature-flag-service/v1/flags/db_not_responding"
+        method: PUT
+        headers:
+          accept: "application/json"
+          Content-Type: "application/json"
+        body: '{"enabled": false}'
+        body_format: json
+        status_code: 200
+        return_content: yes
+
+    - name: Debug the result
+      debug:
+        var: content
